@@ -7,9 +7,7 @@ return {
     "hrsh7th/cmp-buffer",       -- Buffer words
     "hrsh7th/cmp-path",         -- File paths
     "hrsh7th/cmp-cmdline",      -- :cmdline completions
-    "saadparwaiz1/cmp_luasnip", -- Snippets source
     "L3MON4D3/LuaSnip",         -- Snippet engine
-    "rafamadriz/friendly-snippets",
     },
   config = function()
     local cmp = require("cmp")
@@ -27,7 +25,7 @@ return {
         end,
       },
     mapping = cmp.mapping.preset.insert({
-          ["å"] = cmp.mapping.complete(),
+          ["¨"] = cmp.mapping.complete(),
           ["<CR>"]     = cmp.mapping.confirm({ select = true }),
           ["<Tab>"]    = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -90,6 +88,8 @@ return {
           }),
         })
       end
+
+      cmp.setup.filetype( "tex", { enabled = false })
     end,
   },
 }

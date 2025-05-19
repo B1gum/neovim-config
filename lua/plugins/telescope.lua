@@ -35,8 +35,8 @@ return {
       require("telescope").setup(opts)
 			local builtin = require("telescope.builtin")
       require("telescope").load_extension("fzf")
-			vim.keymap.set("n", "<C-s>", builtin.find_files, {})
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+			vim.keymap.set("n", "f", builtin.find_files, {})
+			vim.keymap.set("n", "F", builtin.live_grep, {})
 		end,
 	},
 	{
