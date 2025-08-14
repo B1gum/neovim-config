@@ -13,12 +13,7 @@ return {
 				ensure_installed = {
           "lua_ls",
           "texlab",
-          "ts_ls",
           "html",
-          "cssls",
-          "emmet_ls",
-          "jsonls",
-          "tailwindcss",
         },
 			})
 		end,
@@ -52,14 +47,10 @@ return {
 				},
 			}
 
-      -- Condigure TypeScript / JavaScript / React / Next.js
-      lspconfig.ts_ls.setup({})
 
       -- HTML
       lspconfig.html.setup({})
 
-      -- CSS
-      lspconfig.cssls.setup({})
 
       -- Emmet (in HTML/CSS/JSX/TSX)
       lspconfig.emmet_ls.setup({
