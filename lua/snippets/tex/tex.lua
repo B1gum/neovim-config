@@ -1,6 +1,6 @@
 local ls = require("luasnip")
-local fmta = require("luasnip.extras.fmt").fmta
 ls.config.setup({ enable_autosnippets = true })
+local fmta = require("luasnip.extras.fmt").fmta
 local s = ls.snippet
 local sn = ls.snippet_node
 local t = ls.text_node
@@ -277,7 +277,6 @@ ls.add_snippets("tex", {
     i(1, "nr."),
     t("}"),
   }),
-
 	s({
 		trig = "beg",
 		name = "begin{} end{}",
@@ -285,15 +284,69 @@ ls.add_snippets("tex", {
 	}, {
 		t({ "\\begin{" }),
 		i(1, "environment"),
-		t( "}[" ),
-    i(2, "navn (kun tcolorbox)" ),
-    t({ "]", "  " }),
-    d(3, get_visual),
+		t( "}" ),
+    t({ "", "  " }),
+    d(2, get_visual),
 		t({ "", "\\end{" }),
 		f(function(args)
 			return args[1][1]
 		end, { 1 }),
 		t("}"),
+	}),
+
+	s({
+		trig = "pro",
+		name = "begin{problem} end{problem}",
+		snippetType = "snippet",
+	}, {
+		t({ "\\begin{problem}{" }),
+    i(1, "problem number"),
+    t({ "}", "  " }),
+    d(2, get_visual),
+		t({ "", "\\end{problem}" }),
+	}),
+	s({
+		trig = "prim",
+		name = "begin{problemwithimage} end{problemwithimage}",
+		snippetType = "snippet",
+	}, {
+		t({ "\\begin{problemwithimage}{" }),
+		i(1, "filename"),
+		t( "}{" ),
+    i(2, "problem number"),
+    t( "}", "" ),
+    t({ "", "  " }),
+    d(3, get_visual),
+		t({ "", "\\end{problemwithimage}" }),
+	}),
+	s({
+		trig = "ass",
+		name = "begin{assumptions} end{assumptions}",
+		snippetType = "snippet",
+	}, {
+		t({ "\\begin{assumptions}" }),
+    t({ "", "  \\item " }),
+    d(1, get_visual),
+		t({ "", "\\end{assumptions}" }),
+	}),
+	s({
+		trig = "der",
+		name = "begin{derivation} end{derivation}",
+		snippetType = "snippet",
+	}, {
+		t({ "\\begin{derivation}" }),
+    t({ "", "  " }),
+    d(1, get_visual),
+		t({ "", "\\end{derivation}" }),
+	}),
+	s({
+		trig = "res",
+		name = "finalresult",
+		snippetType = "snippet",
+	}, {
+		t({ "\\finalresult{" }),
+    d(1, get_visual),
+    t({ "}" }),
 	}),
 	s({
 		trig = "bb",
@@ -303,33 +356,11 @@ ls.add_snippets("tex", {
 		t({ "\\bigbreak", "" }),
 	}),
 	s({
-		trig = ",.",
-		name = "sage-symbolic",
-		snippetType = "autosnippet",
-	}, {
-		t({ "\\sage{" }),
-		d(1, get_visual),
-		t({ "} " }),
-	}),
-	s({
-		trig = ".,",
-		name = "sage-calc",
-		snippetType = "autosnippet",
-	}, {
-		t({ "\\sage{round(" }),
-		i(1),
-		t({ ").n(), " }),
-		i(2, "2"),
-		t({ ") \\unit{" }),
-		i(3),
-		t({ "} " }),
-	}),
-	s({
 		trig = "ui",
 		name = "unit",
 		snippetType = "autosnippet",
 	}, {
-		t({ "\\unit{" }),
+		t({ "\\unit{\\" }),
 		d(1, get_visual),
 		t({ "}" }),
 	}),
@@ -340,7 +371,7 @@ ls.add_snippets("tex", {
 	}, {
 		t({ "\\qty{" }),
 		i(1),
-		t({ "}{" }),
+		t({ "}{\\" }),
 		i(2),
 		t({ "} " }),
 	}),
@@ -895,27 +926,42 @@ except Exception as e:
 		t("\\, \\mathrm{d}y "),
 	}),
 	s({
-		trig = "tsp",
+		trig = "s1",
 		name = "thin space",
-		snippetType = "autosnippet",
-	}, {
-		t("\\. "),
-	}),
-	s({
-		trig = "hsp",
-		name = "half space",
 		snippetType = "autosnippet",
 	}, {
 		t("\\, "),
 	}),
 	s({
-		trig = "qq",
-		name = "qquad",
+		trig = "s2",
+		name = "med space",
 		snippetType = "autosnippet",
+	}, {
+		t("\\: "),
+	}),
+	s({
+		trig = "s3",
+		name = "thick space",
+		snippetType = "autosnippet",
+	}, {
+		t("\\; "),
+	}),
+	s({
+		trig = "q",
+		name = "quad",
+		snippetType = "snippet",
 		wordTrig = false,
 	}, {
-		t("\\qquad "),
+		t("\\quad"),
 	}),
+  s({
+    trig = "\\quadq",
+    name = "qquad",
+    snippetType = "autosnippet",
+    wordTrig = true,
+  }, {
+    t("\\qquad "),
+  }),
 	s({
 		trig = "''",
 		name = "single quotes",

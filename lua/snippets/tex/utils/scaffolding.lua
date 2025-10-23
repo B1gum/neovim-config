@@ -68,6 +68,7 @@ M.auto_backslash_snippet = function(context, opts)
 	context.name = context.name or context.trig
 	context.docstring = context.docstring or ([[\]] .. context.trig)
     context.trigEngine = "ecma"
+    context.regTrig = true
     context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
 	return autosnippet(context,
     fmta([[
@@ -90,9 +91,10 @@ M.symbol_snippet = function(context, command, opts)
 	context.name = context.name or command:gsub([[\]], "")
 	context.docstring = context.docstring or (command .. [[{0}]])
 	context.wordTrig = context.wordTrig or false
-    j, _ = string.find(command, context.trig)
+  local j, _ = string.find(command, context.trig)
     if j == 2 then -- command always starts with backslash
         context.trigEngine = "ecma"
+        context.regTrig = true
         context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
         context.hidden = true
     end
@@ -131,8 +133,9 @@ M.single_command_snippet = function(context, command, opts, ext)
 	end
 	context.docstring = context.docstring or (command .. docstring)
     j, _ = string.find(command, context.trig)
-    if j == 2 then 
+    if j == 2 then
         context.trigEngine = "ecma"
+        context.regTrig = true
         context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
         context.hidden = true
     end
@@ -159,6 +162,7 @@ M.postfix_snippet = function (context, command, opts)
     j, _ = string.find(command.pre, context.trig)
     if j == 2 then
         context.trigEngine = "ecma"
+        context.regTrig = true
         context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
         context.hidden = true
     end

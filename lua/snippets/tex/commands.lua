@@ -58,7 +58,8 @@ M = {
       trig = "([acCer])ref",
       name = "(acC|eq)?ref",
       dscr = "add a reference (with autoref, cref, eqref)",
-      trigEngine = "pattern",
+      trigEngine = "ecma",
+      regTrig = true,
       hidden = true,
     },
     fmta(

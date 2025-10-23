@@ -73,9 +73,6 @@ M = {
 	autosnippet({ trig = "inv", wordTrig = false },
     { t("^{-1}") },
     { condition = tex.in_math, show_condition = tex.in_math }),
-  autosnippet({ trig = "ps", wordTrig = false },
-    { t("s^{-1}") },
-    { condition = tex.in_math, show_condition = tex.in_math }),
 
     autosnippet({ trig = "tit", name = "text italics" },
     fmta([[
@@ -98,7 +95,7 @@ M = {
     { condition = tex.in_math, show_condition = tex.in_math }),
 
     autosnippet({
-    trig = "(\\d+|[A-Za-z]+|\\\\[A-Za-z]+)/", name = 'fraction', dscr = 'auto fraction 1', trigEngine = "ecma"},
+    trig = "(\\d+|[A-Za-z]+|\\\\[A-Za-z]+)/", name = 'fraction', dscr = 'auto fraction 1', trigEngine = "ecma", regTrig = true},
     fmta([[
       \frac{<>}{<>}<>
     ]],
@@ -111,7 +108,7 @@ M = {
     }),
     { condition = tex.in_math, show_condition = tex.in_math }),
 
-    autosnippet({ trig='(^.*\\))/', name='fraction', dscr='auto fraction 2', trigEngine="ecma" },
+    autosnippet({ trig='(^.*\\))/', name='fraction', dscr='auto fraction 2', trigEngine="ecma", regTrig = true },
     { d(1, generate_fraction) },
     { condition=tex.in_math, show_condition=tex.in_math }),
 
@@ -233,7 +230,7 @@ local symbol_specs = {
 	[">>"] = { context = { name = ">>" }, command = [[\gg ]] },
 	["~~"] = { context = { name = "~" }, command = [[\sim]] },
 	["~="] = { context = { name = "≈" }, command = [[\approx]] },
-	[":="] = { context = { name = "≔" }, command = [[\definedas]] },
+  [":="] = { context = { name = ":=" }, command = [[\equiv]] },
 	["**"] = { context = { name = "·", priority = 100 }, command = [[\cdot ]] },
 	xx = { context = { name = "×" }, command = [[\times]] },
 	NN = { context = { name = "ℕ" }, command = [[\mathbb{N}]] },
@@ -389,6 +386,16 @@ local postfix_math_specs = {
             post = [[}]],
         }
     },
+    MM = {
+      context = {
+            name = "subscript mathrm",
+            dscr = "subscript math roman style",
+        },
+        command = {
+            pre = [[_{\mathrm{]],
+            post = [[}}]],
+        }
+    },
     mscr = {
         context = {
             name = "mathscr",
@@ -443,10 +450,22 @@ local postfix_math_specs = {
     dot = {
       context = {
         name = "dot",
+        priority = 500,
         dscr = "dot",
     },
     command = {
             pre = [[\dot{]],
+            post = [[}]],
+          }
+    },
+    ddot = {
+      context = {
+        name = "ddot",
+        priority = 5000,
+        dscr = "ddot",
+    },
+    command = {
+            pre = [[\ddot{]],
             post = [[}]],
           }
     },

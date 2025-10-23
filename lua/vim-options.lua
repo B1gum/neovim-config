@@ -16,6 +16,7 @@ local opt = vim.opt -- f$or conciseness
 -- line numbers
 opt.relativenumber = true -- show relative line numbers
 opt.number = true -- shows absolute line number on cursor line (when relative number is on)
+opt.colorcolumn = "120"
 
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
