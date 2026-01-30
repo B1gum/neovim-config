@@ -1,70 +1,66 @@
 return {
-	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-    version = "1.32.0",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-          "lua_ls",
-          "texlab",
-          "html",
-        },
-			})
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
-			local lspconfig = require("lspconfig")
-
-			-- Enable diagnostics virtual text and signs globally
-			vim.diagnostic.config({
-				virtual_text = true,
-				signs = true,
-			})
-
-			-- Configure lua_ls (for Lua language)
-			lspconfig.lua_ls.setup({})
-
-			-- Configure texlab (for LaTeX)
-			lspconfig.texlab.setup{
-				settings = {
-					texlab = {
-						lint = {
-							onChange = true,
-						},
-						forwardSearch = {
-							executable = "skim",
-							args = { "--synctex-forward", "%l:1:%f", "%p" },
-						},
-					},
-				},
-			}
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        version = "1.32.0",
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "lua_ls",
+                    "texlab",
+                    "html",
+                    "marksman",
+                },
+            })
+        end,
+    },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            vim.diagnostic.config({
+                virtual_text = true,
+                signs = true,
+            })
 
 
-      -- HTML
-      lspconfig.html.setup({})
+            vim.lsp.enable("lua_ls")
 
+            vim.lsp.config("texlab", {
+                settings = {
+                    texlab = {
+                        lint = {
+                            onChange = true,
+                        },
+                        forwardSearch = {
+                            executable = "skim",
+                            args = { "--synctex-forward", "%l:1:%f", "%p" },
+                        },
+                    },
+                },
+            })
+            vim.lsp.enable("texlab")
 
-      -- Emmet (in HTML/CSS/JSX/TSX)
-      lspconfig.emmet_ls.setup({
-        filetypes = {
-          "html", "css", "javascriptreact", "typescriptreact",
-          "vue", "svelte",
-        },
-        init_options = {},
-      })
+            vim.lsp.enable("html")
 
-			-- Set key mappings for LSP
-			vim.keymap.set("n", "D", vim.lsp.buf.hover, {})
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-			vim.keymap.set("n", "CA", vim.lsp.buf.code_action, {})
-		end,
-	},
+            vim.lsp.enable("marksman")
+
+            vim.lsp.config("emmet_ls", {
+                filetypes = {
+                    "html", "css", "javascriptreact", "typescriptreact",
+                    "vue", "svelte",
+                },
+                init_options = {},
+            })
+            vim.lsp.enable("emmet_ls")
+
+            vim.keymap.set("n", "D", vim.lsp.buf.hover, {})
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+            vim.keymap.set("n", "CA", vim.lsp.buf.code_action, {})
+        end,
+    },
 }

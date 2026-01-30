@@ -330,6 +330,51 @@ ls.add_snippets("tex", {
 		t({ "", "\\end{assumptions}" }),
 	}),
 	s({
+		trig = "givens",
+		name = "begin{givens} end{givens}",
+		snippetType = "snippet",
+	}, {
+		t({ "\\begin{givens}" }),
+    t({ "", "  "}),
+    i(1, "symbol"),
+    t({ " & " }),
+    i(2, "explanation"),
+		t({ "", "\\end{givens}" }),
+	}),
+	s({
+		trig = "symbols",
+		name = "begin{symbols} end{symbols}",
+		snippetType = "snippet",
+	}, {
+		t({ "\\begin{symbols}" }),
+    t({ "", "\\InsertSym{" }),
+    i(1, "Symbol"),
+    t({ "}" }),
+		t({ "", "\\end{symbols}" }),
+	}),
+	s({
+		trig = "sym",
+		name = "\\InsertSym",
+		snippetType = "snippet",
+	}, {
+    t({ "\\InsertSym{" }),
+    i(1, "Symbol"),
+    t({ "}" }),
+	}),
+	s({
+		trig = "symdef",
+		name = "\\sym",
+		snippetType = "snippet",
+	}, {
+    t({ "\\sym{$" }),
+    i(1, "Symbol"),
+    t({ "$}{" }),
+    i(2, "Description"),
+    t({ "}{\\unit{\\" }),
+    i(3, "unit"),
+		t({ "}}"}),
+	}),
+	s({
 		trig = "der",
 		name = "begin{derivation} end{derivation}",
 		snippetType = "snippet",
@@ -721,6 +766,13 @@ except Exception as e:
     i(2),
     t("}"),
   }),
+  s({
+    trig = "allF",
+    name = "All other Fourier coefficients are 0",
+    snippetType = "autosnippet",
+  }, {
+      t("and all other Fourier coefficients are zero."),
+  }),
 	s({
 		trig = "ift",
 		name = "infinity",
@@ -924,6 +976,30 @@ except Exception as e:
     end,
 	}, {
 		t("\\, \\mathrm{d}y "),
+	}),
+	s({
+		trig = "$dt",
+		name = "dt no space",
+    priority = 5000,
+		snippetType = "autosnippet",
+	}, {
+		t("$\\mathrm{d}t "),
+	}),
+	s({
+		trig = "$dx",
+		name = "dx no space",
+    priority = 5000,
+		snippetType = "autosnippet",
+	}, {
+		t("$\\mathrm{d}x "),
+	}),
+	s({
+		trig = "$dy",
+		name = "dy no space",
+    priority = 5000,
+		snippetType = "autosnippet",
+	}, {
+		t("$\\mathrm{d}y "),
 	}),
 	s({
 		trig = "s1",

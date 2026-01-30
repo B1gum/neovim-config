@@ -54,7 +54,7 @@ return {
           { name = "buffer"   },
         }),
         experimental = {
-          ghost_text = true,  -- nice little inline preview
+          ghost_text = true,
         },
       })
 

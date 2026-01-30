@@ -3,7 +3,7 @@ return {
 	branch = "v3.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
+    "kyazdani42/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
 	},
 	config = function()
@@ -13,8 +13,6 @@ return {
 			filesystem = {
 				filtered_items = {
 					visible = false, -- You can toggle between showing hidden items
-					hide_dotfiles = true, -- Hide dotfiles by default
-					hide_gitignored = true, -- Hide files ignored by git
 					hide_by_pattern = { -- Hide specific files
 						"*.aux",
 						"*.log",
@@ -23,10 +21,6 @@ return {
 						"*.synctex.gz",
             "*.pdf",
             "*.out",
-            "*.sagetex.sage",
-            "*.sagetex.sage.py",
-            "*.sagetex.scmd",
-            "*.sagetex.sout",
             "*.sty",
             "*.synctex(busy)",
             "*.toc",

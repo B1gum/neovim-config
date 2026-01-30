@@ -40,6 +40,8 @@ local reference_snippet_table = {
   C = "C",
   e = "eq",
   r = "",
+  m = "m",
+  M = "M",
 }
 
 M = {
@@ -55,9 +57,9 @@ M = {
 
   autosnippet(
     {
-      trig = "([acCer])ref",
-      name = "(acC|eq)?ref",
-      dscr = "add a reference (with autoref, cref, eqref)",
+      trig = "([mMacCer])ref",
+      name = "(mMacC|eq)?ref",
+      dscr = "add a reference (with autoref, cref, eqref, mref)",
       trigEngine = "ecma",
       regTrig = true,
       hidden = true,

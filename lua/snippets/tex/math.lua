@@ -106,17 +106,17 @@ M = {
 
     autosnippet({ trig = "dm", name = "\\[...\\]", dscr = "display math" },
 	fmta([[ 
-    \[ 
-    <>
-    .\]
+    \begin{equation<>}
+      <>
+    .<>\end{equation<>}
     <>]],
-	{ i(1), i(0) }),
+	{ c(3, {t("*"), t("")}), i(1), i(2), rep(3), i(0)}),
     { condition = line_begin, show_condition = line_begin }),
 
     autosnippet({ trig = "ali", name = "align(|*|ed)", dscr = "align math" },
 	fmta([[ 
     \begin{align<>}
-    <>
+      <>
     .\end{align<>}
     ]],
     { c(1, {t("*"), t(""), t("ed")}), i(2), rep(1) }), -- in order of least-most used
@@ -132,26 +132,17 @@ M = {
 	autosnippet({ trig = "gat", name = "gather(|*|ed)", dscr = "gather math" },
 	fmta([[ 
     \begin{gather<>}
-    <>
+      <>
     .\end{gather<>}
     ]],
 	{ c(1, {t("*"), t(""), t("ed")}), i(2), rep(1) }),
-	{ condition = line_begin, show_condition = line_begin }),
-
-	autosnippet({ trig = "eqn", name = "equation(|*)", dscr = "equation math" },
-	fmta([[
-    \begin{equation<>}
-    <>
-    .\end{equation<>}
-    ]],
-	{ c(1, {t("*"), t("")}), i(2), rep(1) }),
 	{ condition = line_begin, show_condition = line_begin }),
 
     -- Matrices, arrays and Cases
     s({trig = "([bBpvV])mat(%d+)x(%d+)([ar])", name = "[bBpvV]matrix", dscr = "matrices", regTrig = true, hidden = true},
 	fmta([[
     \begin{<>}<>
-    <>
+      <>
     \end{<>}]],
 	{f(function(_, snip)
         return snip.captures[1] .. "matrix"
@@ -173,7 +164,7 @@ M = {
     s({trig = "arr(%d+)x(%d+)([ar])", name = "array", dscr = "creates an array environment with specified dimensions and format", regTrig = true, hidden = true},
     fmta([[
     \begin{array}{<>}
-    <>
+      <>
     \end{array}]],
     {f(function(_, snip)
         -- Extract captures
@@ -205,7 +196,7 @@ M = {
     autosnippet({ trig = "(%d?)cases", name = "cases", dscr = "cases", regTrig = true, hidden = true },
     fmta([[
     \begin{cases}
-    <>
+      <>
     .\end{cases}
     ]],
 	{ d(1, generate_cases) }),
