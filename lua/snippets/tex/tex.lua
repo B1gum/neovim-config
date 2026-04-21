@@ -243,7 +243,7 @@ ls.add_snippets("tex", {
   s({
     trig = "input",
     name = "input",
-    snippetType = "autosnippet",
+    snippetType = "snippet",
   }, {
     t("\\input{"),
     i(1, "fil"),

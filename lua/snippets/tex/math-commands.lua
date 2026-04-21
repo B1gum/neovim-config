@@ -268,6 +268,9 @@ local symbol_specs = {
 	["+-"] = { context = { name = "†" }, command = [[\pm]] },
 	["-+"] = { context = { name = "†" }, command = [[\mp]] },
   ["Ã"] = { context = { name = "tilde A" }, command = [[\tilde{A}]]},
+  ["Nn"] = { context = { name = "cap" }, command = [[\cap]]},
+  ["Uu"] = { context = { name = "cup" }, command = [[\cup]]},
+  ["OO"] = { context = { name = "Empty set" }, command = [[\O]]},
 }
 
 local symbol_snippets = {}
