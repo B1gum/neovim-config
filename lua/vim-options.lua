@@ -1,48 +1,37 @@
-local opt = vim.opt_local
-opt.expandtab = true
+local opt = vim.opt
+
+opt.relativenumber = true
+opt.number = true
+opt.colorcolumn = "120"
 opt.tabstop = 2
 opt.shiftwidth = 2
-opt.softtabstop = 2
-opt.spell = true
-opt.spelllang = 'en,da'
+opt.expandtab = true
+opt.autoindent = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.cursorline = true
+opt.termguicolors = true
+opt.background = "dark"
+opt.signcolumn = "yes"
+opt.backspace = "indent,eol,start"
+opt.clipboard:append("unnamedplus")
+opt.swapfile = false
+opt.timeout = true
+opt.timeoutlen = 500
 
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
-
 vim.cmd("let g:netrw_liststyle = 3")
 
-local opt = vim.opt -- f$or conciseness
+local spell_group = vim.api.nvim_create_augroup("tex_spelling", { clear = true })
+local spellfile = vim.fn.stdpath("config") .. "/spell/custom.utf-8.add"
 
--- line numbers
-opt.relativenumber = true -- show relative line numbers
-opt.number = true -- shows absolute line number on cursor line (when relative number is on)
-opt.colorcolumn = "120"
-
--- tabs & indentation
-opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
-opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent from current line when starting new one
-
--- search settings
-opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
-
--- cursor line
-opt.cursorline = true -- highlight the current cursor line
-
-opt.termguicolors = true
-opt.background = "dark" -- colorschemes that can be light or dark will be made dark
-opt.signcolumn = "yes" -- show sign column so that text doesn't shift
-
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
-
--- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
-
--- turn off swapfile
-opt.swapfile = false
-
-opt.timeout = true
-opt.timeoutlen = 500
+vim.api.nvim_create_autocmd("FileType", {
+  group = spell_group,
+  pattern = "tex",
+  callback = function()
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = "en,da"
+    vim.opt_local.spellfile = spellfile
+  end,
+})

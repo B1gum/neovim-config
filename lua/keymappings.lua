@@ -14,7 +14,7 @@ vim.keymap.set("c", "<leader>jj", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("n", "n", "nzz")
 
 -- Auto-recenter after N
-vim.keymap.set("n", "N", "NZZ")
+vim.keymap.set("n", "N", "Nzz")
 
 vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", { desc = "Clear search highlight" })
 vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Vertical Split" })
@@ -25,6 +25,41 @@ vim.cmd [[
   inoremap <C-f> <Esc>:silent exec '.!inkscape-figures create "' . getline('.') . '" "' . b:vimtex.root . '/figures/"'<CR><CR>:w<CR>
   nnoremap <C-f> :silent exec '!inkscape-figures edit "' . b:vimtex.root . '/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 ]]
+
+-- Fix previous misspelled word with first suggestion
+vim.keymap.set("i", "<C-l>", "<C-g>u<Esc>[s1z=`]a<C-g>u", {
+  silent = true,
+  desc = "Fix previous misspelling",
+})
+
+local function add_prev_bad_word()
+  local view = vim.fn.winsaveview()
+  vim.cmd("silent! normal! [s")
+
+  local bad = vim.fn.spellbadword()[1]
+  if bad == "" then
+    vim.fn.winrestview(view)
+    vim.notify("No previous misspelled word found", vim.log.levels.INFO)
+    return
+  end
+
+  vim.cmd("silent! normal! zg")
+  vim.fn.winrestview(view)
+  vim.notify(("Added '%s' to spellfile"):format(bad), vim.log.levels.INFO)
+end
+
+vim.keymap.set("n", "<C-k>", add_prev_bad_word, {
+  silent = true,
+  desc = "Add previous misspelling to wordlist",
+})
+
+vim.keymap.set("i", "<C-k>", function()
+  add_prev_bad_word()
+  vim.cmd("startinsert")
+end, {
+  silent = true,
+  desc = "Add previous misspelling to wordlist",
+})
 
 -- Luasnip choice node jumps
 vim.api.nvim_set_keymap("i", "<leader>ø", "<Plug>luasnip-next-choice", { desc = "Luasnip-next-choice" })

@@ -12,6 +12,7 @@ return {
 		require("neo-tree").setup({
 			filesystem = {
 				filtered_items = {
+          hide_gitignored = false,
 					visible = false, -- You can toggle between showing hidden items
 					hide_by_pattern = { -- Hide specific files
 						"*.aux",
@@ -21,10 +22,10 @@ return {
 						"*.synctex.gz",
             "*.pdf",
             "*.out",
-            "*.sty",
             "*.synctex(busy)",
             "*.toc",
             "*.latexmain",
+            "*.xdv",
 					},
 				},
 			},

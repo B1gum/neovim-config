@@ -478,7 +478,7 @@ local postfix_math_specs = {
         dscr = "upright determinant operator",
     },
     command = {
-            pre = [[\mathrm{det}(]],
+            pre = [[\det(]],
             post = [[)]],
           }
     },
