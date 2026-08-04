@@ -1,17 +1,15 @@
 local ls = require("luasnip")
 ls.config.setup({ enable_autosnippets = true })
-local fmta = require("luasnip.extras.fmt").fmta
 local s = ls.snippet
 local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
 local d = ls.dynamic_node
-local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
 
-local get_visual = function(args, parent)
+local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
 		return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
 	else -- If LS_SELECT_RAW is empty, return a blank insert node
@@ -20,226 +18,6 @@ local get_visual = function(args, parent)
 end
 
 ls.add_snippets("tex", {
-	s({
-		trig = "template",
-		name = "latex-template",
-		snippetType = "autosnippet",
-	}, {
-		t({
-			"\\documentclass[12pt]{article}",
-			"\\usepackage[danish]{babel}",
-			"\\usepackage{amsfonts, amssymb, mathtools, amsthm, amsmath}",
-			"\\usepackage{graphicx, pgfplots}",
-			"\\usepackage{url}",
-			"\\usepackage[dvipsnames]{xcolor}",
-			"\\usepackage{sagetex}",
-      "\\usepackage{lastpage}",
-			"",
-			"%loaded last",
-			"\\usepackage[hidelinks]{hyperref}",
-			"",
-			"\\usepackage{siunitx}",
-			"  \\sisetup{exponent-product = \\cdot,",
-			"    output-decimal-marker = {,}}",
-			"",
-			"%Giles Castelles incfig",
-			"\\usepackage{import}",
-			"\\usepackage{xifthen}",
-			"\\usepackage{pdfpages}",
-			"\\usepackage{transparent}",
-			"",
-			"\\newcommand{\\incfig}[2][1]{%",
-			"  \\def\\svgwidth{#1\\columnwidth}",
-			"  \\import{./figures/}{#2.pdf_tex}",
-			"}",
-			"",
-			"\\setlength{\\parindent}{0in}",
-			"\\setlength{\\oddsidemargin}{0in}",
-			"\\setlength{\\textwidth}{6.5in}",
-			"\\setlength{\\textheight}{8.8in}",
-			"\\setlength{\\topmargin}{0in}",
-			"\\setlength{\\headheight}{18pt}",
-			"",
-			"\\usepackage{fancyhdr}",
-			"\\pagestyle{fancy}",
-			"",
-			"\\fancyhead{}",
-			"\\fancyfoot{}",
-			"\\fancyfoot[R]{\\thepage}",
-			"\\fancyhead[C]{\\leftmark}",
-			"",
-			"\\pgfplotsset{compat=newest}",
-			"",
-			"\\pgfplotsset{every axis/.append style={",
-			"  axis x line=middle,    % put the x axis in the middle",
-			"  axis y line=middle,    % put the y axis in the middle",
-			"  axis line style={<->,color=black}, % arrows on the axis",
-			"}}",
-			"",
-			"\\usepackage{thmtools}",
-			"\\usepackage{tcolorbox}",
-			"  \\tcbuselibrary{skins, breakable}",
-			"  \\tcbset{",
-			"    space to upper=1em,",
-			"    space to lower=1em,",
-			"  }",
-			"",
-			"\\theoremstyle{definition}",
-			"",
-			"\\newtcolorbox[auto counter]{definition}[1][]{%",
-			"  breakable,",
-			"  colframe=ForestGreen,  %frame color",
-			"  colback=ForestGreen!5, %background color",
-			"  colbacktitle=ForestGreen!25, %background color for title",
-			"  coltitle=ForestGreen!70!black,  %title color",
-			"  fonttitle=\\bfseries\\sffamily, %title font",
-			"  left=1em,              %space on left side in box,",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{ForestGreen},  %display left line",
-			"  title=Definition \\thetcbcounter: #1,",
-			"}",
-			"",
-			"\\newtcolorbox{greenline}{%",
-			"  breakable,",
-			"  colframe=ForestGreen,  %frame color",
-			"  colback=white,          %remove background color",
-			"  left=1em,              %space on left side in box",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{ForestGreen},  %display left line",
-			"}",
-			"",
-			"\\newtcolorbox[auto counter, number within=section]{eks}[1][]{%",
-			"  brekable,",
-			"  colframe=NavyBlue,  %frame color",
-			"  colback=NavyBlue!5, %background color",
-			"  colbacktitle=NavyBlue!25,    %background color for title",
-			"  coltitle=NavyBlue!70!black,  %title color",
-			"  fonttitle=\\bfseries\\sffamily, %title font",
-			"  left=1em,            %space on left side in box,",
-			"  enhanced,            %more options",
-			"  frame hidden,        %hide frame",
-			"  borderline west={2pt}{0pt}{NavyBlue},  %display left line",
-			"  title=Eksempel \\thetcbcounter: #1",
-			"}",
-			"",
-			"\\newtcolorbox{blueline}{%",
-			"  breakable,",
-			"  colframe=NavyBlue,     %frame color",
-			"  colback=white,         %remove background",
-			"  left=1em,              %space on left side in box,",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{NavyBlue},  %display left line",
-			"}",
-			"",
-			"\\newtcolorbox{teo}[1][]{%",
-			"  breakable,",
-			"  colframe=RawSienna,  %frame color",
-			"  colback=RawSienna!5, %background color",
-			"  colbacktitle=RawSienna!25,    %background color for title",
-			"  coltitle=RawSienna!70!black,  %title color",
-			"  fonttitle=\\bfseries\\sffamily, %title font",
-			"  left=1em,              %space on left side in box,",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{RawSienna},  %display left line",
-			"  title=Teori: #1,",
-			"}",
-			"",
-			"\\newtcolorbox[auto counter, number within=section]{sæt}[1][]{%",
-			"  breakable,",
-			"  colframe=RawSienna,  %frame color",
-			"  colback=RawSienna!5, %background color",
-			"  colbacktitle=RawSienna!25,    %background color for title",
-			"  coltitle=RawSienna!70!black,  %title color",
-			"  fonttitle=\\bfseries\\sffamily, %title font",
-			"  left=1em,              %space on left side in box,",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{RawSienna},  %display left line",
-			"  title=Sætning \\thetcbcounter: #1,",
-			"  before lower={\\textbf{Bevis:}\\par\\vspace{0.5em}},",
-			"  colbacklower=RawSienna!25,",
-			"}",
-			"",
-			"\\newtcolorbox{redline}{%",
-			"  breakable,",
-			"  colframe=RawSienna,  %frame color",
-			"  colback=white,       %Remove background color",
-			"  left=1em,            %space on left side in box,",
-			"  enhanced,            %more options",
-			"  frame hidden,        %hide frame",
-			"  borderline west={2pt}{0pt}{RawSienna},  %display left line",
-			"}",
-			"",
-			"\\newtcolorbox{for}[1][]{%",
-			"  breakable,",
-			"  colframe=NavyBlue,  %frame color",
-			"  colback=NavyBlue!5, %background color",
-			"  colbacktitle=NavyBlue!25,    %background color for title",
-			"  coltitle=NavyBlue!70!black,  %title color",
-			"  fonttitle=\\bfseries\\sffamily, %title font",
-			"  left=1em,              %space on left side in box,",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{NavyBlue},  %display left line",
-			"  title=Forklaring #1,",
-			"}",
-			"",
-			"\\newtcolorbox{bem}{%",
-			"  breakable,",
-			"  colframe=NavyBlue,  %frame color",
-			"  colback=NavyBlue!5, %background color",
-			"  colbacktitle=NavyBlue!25,    %background color for title",
-			"  coltitle=NavyBlue!70!black,  %title color",
-			"  fonttitle=\\bfseries\\sffamily, %title font",
-			"  left=1em,              %space on left side in box,",
-			"  enhanced,              %more options",
-			"  frame hidden,          %hide frame",
-			"  borderline west={2pt}{0pt}{NavyBlue},  %display left line",
-			"  title=Bemærkning:,",
-			"}",
-			"",
-			"\\makeatother",
-			"\\def\\@lecture{}%",
-			"\\newcommand{\\lecture}[3]{",
-			"  \\ifthenelse{\\isempty{#3}}{%",
-			"    \\def\\@lecture{Lecture #1}%",
-			"  }{%",
-			"    \\def\\@lecture{Lecture #1: #3}%",
-			"  }%",
-			"  \\subsection*{\\makebox[\\textwidth][l]{\\@lecture \\hfill \\normalfont\\small\\textsf{#2}}}",
-			"}",
-			"",
-			"\\makeatletter",
-			"",
-			"\\newcommand{\\opgave}[1]{%",
-			" \\def\\@opgave{#1}%",
-			" \\subsection*{Opgave #1}",
-			"}",
-			"",
-			"\\makeatother",
-			"",
-			"%Format lim the same way in intext and in display",
-			"\\let\\svlim\\lim\\def\\lim{\\svlim\\limits}",
-			"",
-			"% horizontal rule",
-			"\\newcommand\\hr{",
-			"\\noindent\\rule[0.5ex]{\\linewidth}{0.5pt}",
-			"}",
-			"",
-			"\\title{",
-		}),
-		i(1, "Title"),
-		t("}"),
-		t({ "", "\\author{Noah Rahbek Bigum Hansen}", "\\date{" }),
-		i(2, "Date"),
-		t({ "}", "", "\\begin{document}", "", "\\maketitle", "", "" }),
-		i(0),
-		t({ "", "", "\\end{document}" }),
-	}),
   s({
     trig = "input",
     name = "input",
@@ -340,39 +118,6 @@ ls.add_snippets("tex", {
     t({ " & " }),
     i(2, "explanation"),
 		t({ "", "\\end{givens}" }),
-	}),
-	s({
-		trig = "symbols",
-		name = "begin{symbols} end{symbols}",
-		snippetType = "snippet",
-	}, {
-		t({ "\\begin{symbols}" }),
-    t({ "", "\\InsertSym{" }),
-    i(1, "Symbol"),
-    t({ "}" }),
-		t({ "", "\\end{symbols}" }),
-	}),
-	s({
-		trig = "sym",
-		name = "\\InsertSym",
-		snippetType = "snippet",
-	}, {
-    t({ "\\InsertSym{" }),
-    i(1, "Symbol"),
-    t({ "}" }),
-	}),
-	s({
-		trig = "symdef",
-		name = "\\sym",
-		snippetType = "snippet",
-	}, {
-    t({ "\\sym{$" }),
-    i(1, "Symbol"),
-    t({ "$}{" }),
-    i(2, "Description"),
-    t({ "}{\\unit{\\" }),
-    i(3, "unit"),
-		t({ "}}"}),
 	}),
 	s({
 		trig = "der",
@@ -569,56 +314,6 @@ ls.add_snippets("tex", {
 		t({ "", "\\end{description}" }),
 	}),
 	s({
-		trig = "sympy",
-		name = "sympyblock",
-		snippetType = "snippet",
-	}, {
-		t({ "sympy " }),
-		d(1, get_visual),
-		t({ " sympy" }),
-	}),
-	s({
-		trig = "sympy(.*)sympy",
-		name = "sympy",
-		snippetType = "snippet",
-		priority = 100000,
-		regTrig = true,
-		wordTrig = false,
-	}, {
-		f(function(_, snip)
-			-- Capture the expression inside "sympy ... sympy"
-			local expression = snip.captures[1]
-
-			-- Prepare the sympy expression in Python code
-			local python_code = string.format(
-				[=[
-from sympy import *
-x, y, z, t = symbols('x y z t')
-k, m, n = symbols('k m n', integer=True)
-f, g, h = symbols('f g h', cls=Function)
-init_printing()
-try:
-    result = latex(eval('%s'))
-    print(result)
-except Exception as e:
-    print("Error:", e)
-]=],
-				expression:gsub("\\", ""):gsub("%^", "**"):gsub("{", "("):gsub("}", ")")
-			)
-
-			-- Execute the Python code
-			local handle = io.popen('python3 -c "' .. python_code:gsub('"', '\\"') .. '"')
-			local result = handle:read("*a") -- Capture the output
-			handle:close()
-
-			-- Trim any leading/trailing whitespace
-			result = result:gsub("^%s*(.-)%s*$", "%1")
-
-			return result ~= "" and result or "Error: No output from sympy"
-		end, {}),
-		i(0), -- Final cursor position
-	}),
-	s({
 		trig = "ceil",
 		name = "ceiling",
 		snippetType = "autosnippet",
@@ -656,85 +351,6 @@ except Exception as e:
 		i(3, "a_n z^n"),
 	}),
 	s({
-		trig = "taylor",
-		name = "taylor",
-		snippetType = "snippet",
-	}, {
-		t("\\sum_{"),
-		i(1, "k"),
-		t(" = "),
-		i(2, "0"),
-		t("}^{"),
-		i(3, "\\infty"),
-		t("} "),
-		i(4, "c_"),
-		rep(1),
-		t(" (x-a)^"),
-		rep(1),
-		t(" "),
-	}),
-	s({
-		trig = "taylors",
-		name = "taylor variation",
-		snippetType = "snippet",
-	}, {
-		t("\\sum_{"),
-		i(1, "k"),
-		t(" = "),
-		i(2, "0"),
-		t("}^{"),
-		i(3, "\\infty"),
-		t("} \\frac{"),
-		i(4, "f^{("),
-		rep(1),
-		t(")}(x_0)}{"),
-		rep(1),
-		t("!} (x-x_0)^"),
-		rep(1),
-		t(" "),
-	}),
-	s({
-		trig = "ekin",
-		name = "kinetic energy",
-		snippetType = "autosnippet",
-	}, {
-		t("\\frac{1}{2} \\cdot "),
-		i(1, "m"),
-		t(" \\cdot \\left( "),
-		i(2, "v"),
-		t(" \\right)^2 "),
-	}),
-	s({
-		trig = "1dif",
-		name = "solution to inhomogenous 1. order diffferential equation",
-		snippetType = "snippet",
-	}, {
-		t({ "%dy/dx + P(x)y = Q(x) \\ v(x) = e^{\\int P(x) \\, dx}", "y = e^{-\\int " }),
-		i(1, "P(x)"),
-		t(" \\, \\mathrm{d}x} \\left( \\int e^{\\int "),
-		rep(1),
-		t(" \\, \\mathrm{d}x} "),
-		i(2, "Q(x)"),
-		t(" \\, \\mathrm{d}x + "),
-		i(3, "C"),
-		t(" \\right) "),
-	}),
-	s({
-		trig = "2dif",
-		name = "2. order homogenous differential equation",
-		snippetType = "snippet",
-	}, {
-		t({ "P(x)y'' + Q(x)y' + R(x)y = 0" }),
-	}),
-	s({
-		trig = "2difi",
-		name = "2. order inhomogenous differential equation",
-		snippetType = "snippet",
-	}, {
-		t({ "P(x)y'' + Q(x)y' + R(x)y = " }),
-		i(1, "G(x)"),
-	}),
-	s({
 		trig = "int",
 		name = "integral",
 		snippetType = "autosnippet",
@@ -765,13 +381,6 @@ except Exception as e:
     t("}{"),
     i(2),
     t("}"),
-  }),
-  s({
-    trig = "allF",
-    name = "All other Fourier coefficients are 0",
-    snippetType = "autosnippet",
-  }, {
-      t("and all other Fourier coefficients are zero."),
   }),
 	s({
 		trig = "ift",
@@ -978,30 +587,6 @@ except Exception as e:
 		t("\\, \\mathrm{d}y "),
 	}),
 	s({
-		trig = "$dt",
-		name = "dt no space",
-    priority = 5000,
-		snippetType = "autosnippet",
-	}, {
-		t("$\\mathrm{d}t "),
-	}),
-	s({
-		trig = "$dx",
-		name = "dx no space",
-    priority = 5000,
-		snippetType = "autosnippet",
-	}, {
-		t("$\\mathrm{d}x "),
-	}),
-	s({
-		trig = "$dy",
-		name = "dy no space",
-    priority = 5000,
-		snippetType = "autosnippet",
-	}, {
-		t("$\\mathrm{d}y "),
-	}),
-	s({
 		trig = "s1",
 		name = "thin space",
 		snippetType = "autosnippet",
@@ -1062,16 +647,6 @@ except Exception as e:
 		d(1, get_visual),
 		t("''"),
 	}),
-	s({
-		trig = "ekons",
-		name = "energikonservation",
-		snippetType = "autosnippet",
-		condition = function()
-			return vim.fn["vimtex#syntax#in_mathzone"]() == 1
-		end,
-	}, {
-		t("k_{0} + U_{0} = k_{1} + U_{1}"),
-	}),
   s({
     trig = "var",
     name = "Variance",
@@ -1082,15 +657,6 @@ except Exception as e:
   }, {
     t("\\mathrm{Var}("),
     i(1, "X"),
-    t(")"),
-  }),
-  s({
-    trig = "()",
-    name = "parenthesis jump",
-    snippetType = "autosnippet",
-  }, {
-    t("("),
-    i(1),
     t(")"),
   }),
 })

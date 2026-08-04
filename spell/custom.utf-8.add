@@ -11,7 +11,6 @@ time-derivative
 mass-spring-damper
 Resistor-inductor-capacitor
 Taylor-transforms
-as
 Laplace-domain
 time-domain
 initial-value
@@ -41,7 +40,6 @@ Routh-Hurwitz
 Hurwitz's
 Routh
 right-half
-sk
 root-locus
 real-axis
 key-idea
@@ -54,7 +52,6 @@ Ziegler-Nichols
 PD-controller
 PI-controller
 quarter-amplitude
-stabiulity
 time-invariant
 low-frequency
 log-magnitude-phase
@@ -79,3 +76,7 @@ discretize
 step-length
 finite-difference
 overfitted
+Stivheden
+stivheden
+tilladelige
+tandfodsspændinger

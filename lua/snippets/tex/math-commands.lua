@@ -4,29 +4,12 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local sn = ls.snippet_node
-local isn = ls.indent_snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
-local r = ls.restore_node
-local events = require("luasnip.util.events")
-local ai = require("luasnip.nodes.absolute_indexer")
-local extras = require("luasnip.extras")
-local l = extras.lambda
-local rep = extras.rep
-local p = extras.partial
-local m = extras.match
-local n = extras.nonempty
-local dl = extras.dynamic_lambda
-local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
-local conds = require("luasnip.extras.expand_conditions")
-local postfix = require("luasnip.extras.postfix").postfix
-local types = require("luasnip.util.types")
-local parse = require("luasnip.util.parser").parse_snippet
-local ms = ls.multi_snippet
 local autosnippet = ls.extend_decorator.apply(s, { snippetType = "autosnippet" })
 
 -- [
@@ -44,10 +27,10 @@ local generate_fraction = function (_, snip)
     local depth = 0
     local j = #stripped
     while true do
-        local c = stripped:sub(j, j)
-        if c == "(" then
+        local ci = stripped:sub(j, j)
+        if ci == "(" then
             depth = depth + 1
-        elseif c == ")" then
+        elseif ci == ")" then
             depth = depth - 1
         end
         if depth == 0 then
@@ -166,6 +149,8 @@ local auto_backslash_specs = {
 	"ln",
 	"exp",
   "sum",
+  "grad",
+  "det",
 }
 
 local auto_backslash_snippets = {}
@@ -327,13 +312,6 @@ local single_command_math_specs = {
 		},
 		command = [[^]],
 	},
-	sbt = {
-		context = {
-			name = "substack",
-			dscr = "substack for sums/products",
-		},
-		command = [[\substack]],
-	},
 	sq = {
 		context = {
 			name = "sqrt",
@@ -420,14 +398,14 @@ local postfix_math_specs = {
         },
     },
     hat = {
-		context = {
-			name = "hat",
-			dscr = "hat",
-		},
-		command = {
-            pre = [[\hat{]],
-            post = [[}]],
-        }
+      context = {
+        name = "hat",
+        dscr = "hat",
+      },
+      command = {
+              pre = [[\hat{]],
+              post = [[}]],
+        },
     },
     vec = {
       context = {
@@ -436,6 +414,16 @@ local postfix_math_specs = {
       },
       command = {
           pre = [[\Vec{]],
+          post = [[}]]
+        }
+    },
+    mat = {
+      context = {
+        name = "mat",
+        dscr = "mat",
+      },
+      command = {
+          pre = [[\Mat{]],
           post = [[}]]
         }
     },
@@ -470,16 +458,6 @@ local postfix_math_specs = {
     command = {
             pre = [[\ddot{]],
             post = [[}]],
-          }
-    },
-    det = {
-      context = {
-        name = "determinant",
-        dscr = "upright determinant operator",
-    },
-    command = {
-            pre = [[\det(]],
-            post = [[)]],
           }
     },
 }
