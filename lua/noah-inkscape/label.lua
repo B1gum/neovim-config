@@ -1,0 +1,1 @@
+/Users/noahhansen/.config/noah-inkscape/nvim/lua/noah-inkscape/label.lua
