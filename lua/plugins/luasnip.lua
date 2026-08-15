@@ -32,32 +32,8 @@ return {
         end,
       })
 
-      -- 4) Tab‑based expand/jump
-      vim.keymap.set({ "i", "s" }, "<Tab>", function()
-        return ls.expand_or_jumpable()
-          and "<cmd>lua require('luasnip').expand_or_jump()<CR>"
-          or vim.api.nvim_replace_termcodes("<Tab>", true, true, true)
-      end, { expr = true, silent = true })
-
-      vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-        return ls.jumpable(-1)
-          and "<cmd>lua require('luasnip').jump(-1)<CR>"
-          or vim.api.nvim_replace_termcodes("<S-Tab>", true, true, true)
-      end, { expr = true, silent = true })
-
-      -- 5) Choice‑node navigation
-      vim.keymap.set("i", "<C-E>", function()
-        if ls.choice_active() then ls.change_choice(1) end
-      end)
-
-      for _, mode in ipairs({ "i", "s" }) do
-        vim.keymap.set(mode, "<C-n>", function()
-          if ls.choice_active() then ls.change_choice(1) end
-        end, { silent = true })
-        vim.keymap.set(mode, "<C-p>", function()
-          if ls.choice_active() then ls.change_choice(-1) end
-        end, { silent = true })
-      end
+      -- 4) Interaction keymaps are owned by nvim-cmp so Tab/Shift-Tab and
+      -- Ctrl-N/Ctrl-P have exactly one canonical implementation.
     end,
   },
 }

@@ -29,7 +29,6 @@ hi clear Conceal
 
 setlocal spell
 set spelllang=en,da
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 augroup vimtex_event_focus
   au!

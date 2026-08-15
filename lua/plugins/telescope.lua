@@ -15,8 +15,6 @@ return {
           path_display = { "smart" },
           mappings = {
             i = {
-              ["<C-n>"] = actions.cycle_history_next,
-              ["<C-p>"] = actions.cycle_history_prev,
               ["<C-c>"] = actions.close,
             },
             n = {
@@ -31,8 +29,8 @@ return {
       require("telescope").setup(opts)
 			local builtin = require("telescope.builtin")
       require("telescope").load_extension("fzf")
-			vim.keymap.set("n", "f", builtin.find_files, {})
-			vim.keymap.set("n", "F", builtin.live_grep, {})
+			vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "Picker: find files" })
+			vim.keymap.set("n", "<leader>pg", builtin.live_grep, { desc = "Picker: live grep" })
     end,
   },
   {

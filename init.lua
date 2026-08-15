@@ -1,5 +1,3 @@
-package.path = package.path .. ';' .. vim.fn.expand("~/.config/lua/tungsten") .. "/?.lua"
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -25,5 +23,3 @@ require("noah-inkscape").setup()
 require("course_context")
 
 vim.g.python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.12/bin/python3'
-
-vim.env.PATH = vim.fn.system("echo -n $PATH")

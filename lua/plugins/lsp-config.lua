@@ -15,6 +15,7 @@ return {
                     "texlab",
                     "html",
                     "marksman",
+                    "emmet_ls",
                 },
             })
         end,
@@ -30,21 +31,6 @@ return {
 
             vim.lsp.enable("lua_ls")
 
-            vim.lsp.config("texlab", {
-                settings = {
-                    texlab = {
-                        lint = {
-                            onChange = true,
-                        },
-                        forwardSearch = {
-                            executable = "skim",
-                            args = { "--synctex-forward", "%l:1:%f", "%p" },
-                        },
-                    },
-                },
-            })
-            vim.lsp.enable("texlab")
-
             vim.lsp.enable("html")
 
             vim.lsp.enable("marksman")
@@ -58,9 +44,9 @@ return {
             })
             vim.lsp.enable("emmet_ls")
 
-            vim.keymap.set("n", "D", vim.lsp.buf.hover, {})
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-            vim.keymap.set("n", "CA", vim.lsp.buf.code_action, {})
+            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code: action" })
         end,
     },
 }

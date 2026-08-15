@@ -5,10 +5,12 @@ return {
 			options = {
 				theme = "auto",
 			},
-      sections_c = {
-      { 'filename', path = 1},
-        'vimtex#StatusLine()', -- display current compilation status
-        'lsp_progress', -- display lsp-progress
+      sections = {
+        lualine_c = {
+          { "filename", path = 1 },
+          "vimtex#StatusLine()",
+          "lsp_progress",
+        },
       }
 		})
 	end,

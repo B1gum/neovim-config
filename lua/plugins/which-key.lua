@@ -1,9 +1,14 @@
 return {
   "folke/which-key.nvim",
-  opts = {
-  },
+  opts = {},
   config = function(_, opts)
-    require("which-key").setup(opts)
+    local wk = require("which-key")
+    wk.setup(opts)
+    wk.add({
+      { "<leader>c", group = "code" },
+      { "<leader>p", group = "pickers" },
+      { "<leader>s", group = "spelling" },
+      { "<leader>w", group = "windows" },
+    })
   end,
 }
-

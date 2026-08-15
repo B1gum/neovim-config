@@ -1,37 +1,37 @@
--- Remap Caps Lock to Escape in Insert mode
-vim.keymap.set("i", "<leader>jj", "<Esc>", { noremap = true, silent = true })
+-- Fast Insert-mode escape without consuming native Normal/Visual motions.
+vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true, desc = "Exit insert mode" })
 
--- Remap Caps Lock to Escape in Normal mode
-vim.keymap.set("n", "<leader>jj", "<Esc>", { noremap = true, silent = true })
-
--- Remap Caps Lock to Escape in Visual mode
-vim.keymap.set("v", "<leader>jj", "<Esc>", { noremap = true, silent = true })
-
--- Remap Caps Lock to Escape in Command-line mode
-vim.keymap.set("c", "<leader>jj", "<Esc>", { noremap = true, silent = true })
-
--- Auto-recenter after n
+-- Keep search matches centered.
 vim.keymap.set("n", "n", "nzz")
-
--- Auto-recenter after N
 vim.keymap.set("n", "N", "Nzz")
 
-vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", { desc = "Clear search highlight" })
-vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Vertical Split" })
-vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Horizontal Split" })
-
--- Noah Inkscape workflow (Inspired by Gilles Castel's 2nd Blog post)
-vim.keymap.set("n", "<C-f>", "<cmd>Figure<CR>", {
-    noremap = true,
-    silent = true,
-    desc = "Figure: New",
-})
-
--- Fix previous misspelled word with first suggestion
-vim.keymap.set("i", "<C-l>", "<C-g>u<Esc>[s1z=`]a<C-g>u", {
+vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", {
   silent = true,
-  desc = "Fix previous misspelling",
+  desc = "Clear search highlight",
 })
+
+-- Window namespace.
+vim.keymap.set("n", "<leader>wv", ":vsplit<CR>", {
+  silent = true,
+  desc = "Window: vertical split",
+})
+vim.keymap.set("n", "<leader>wh", ":split<CR>", {
+  silent = true,
+  desc = "Window: horizontal split",
+})
+
+-- Figure workflow. The picker owns both opening and creating figures.
+vim.keymap.set("n", "<leader>f", "<cmd>Figure<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Figures",
+})
+
+local function fix_prev_bad_word()
+  local view = vim.fn.winsaveview()
+  vim.cmd("silent! normal! [s1z=")
+  vim.fn.winrestview(view)
+end
 
 local function add_prev_bad_word()
   local view = vim.fn.winsaveview()
@@ -49,22 +49,29 @@ local function add_prev_bad_word()
   vim.notify(("Added '%s' to spellfile"):format(bad), vim.log.levels.INFO)
 end
 
-vim.keymap.set("n", "<C-k>", add_prev_bad_word, {
+-- Spelling namespace.
+vim.keymap.set("n", "<leader>sf", fix_prev_bad_word, {
   silent = true,
-  desc = "Add previous misspelling to wordlist",
+  desc = "Spelling: fix previous word",
+})
+vim.keymap.set("i", "<leader>sf", function()
+  vim.cmd("stopinsert")
+  fix_prev_bad_word()
+  vim.cmd("startinsert")
+end, {
+  silent = true,
+  desc = "Spelling: fix previous word",
 })
 
-vim.keymap.set("i", "<C-k>", function()
+vim.keymap.set("n", "<leader>sa", add_prev_bad_word, {
+  silent = true,
+  desc = "Spelling: add previous word",
+})
+vim.keymap.set("i", "<leader>sa", function()
+  vim.cmd("stopinsert")
   add_prev_bad_word()
   vim.cmd("startinsert")
 end, {
   silent = true,
-  desc = "Add previous misspelling to wordlist",
+  desc = "Spelling: add previous word",
 })
-
--- Luasnip choice node jumps
-vim.api.nvim_set_keymap("i", "<leader>ø", "<Plug>luasnip-next-choice", { desc = "Luasnip-next-choice" })
-vim.api.nvim_set_keymap("s", "<leader>ø", "<Plug>luasnip-next-choice", { desc = "Luasnip-next-choice" })
-vim.api.nvim_set_keymap("i", "<leader>æ", "<Plug>luasnip-prev-choice", { desc = "Luasnip-prev-choice" })
-vim.api.nvim_set_keymap("s", "<leader>æ", "<Plug>luasnip-prev-choice", { desc = "Luasnip-prev-choice" })
-

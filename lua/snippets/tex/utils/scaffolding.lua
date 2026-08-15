@@ -22,7 +22,7 @@ local generate_postfix_dynamicnode = function(_, parent, _, user_arg1, user_arg2
         ]],
         {t(user_arg1), t(capture), t(user_arg2), i(0)}))
     else
-        local visual_placeholder = parent.snippet.env.SELECT_RAW
+        local visual_placeholder = parent.snippet.env.LS_SELECT_RAW
         return sn(nil, fmta([[
         <><><><>
         ]],
@@ -32,8 +32,8 @@ end
 
 -- visual util to add insert node - thanks ejmastnak!
 M.get_visual = function(args, parent)
-	if #parent.snippet.env.SELECT_RAW > 0 then
-		return sn(nil, i(1, parent.snippet.env.SELECT_RAW))
+	if #parent.snippet.env.LS.SELECT_RAW > 0 then
+		return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
 	else -- If SELECT_RAW is empty, return a blank insert node
 		return sn(nil, i(1))
 	end
