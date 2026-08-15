@@ -22,4 +22,7 @@ vim.opt.runtimepath:prepend(
 require("noah-inkscape").setup()
 require("course_context")
 
-vim.g.python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.12/bin/python3'
+local python3 = vim.fn.exepath("python3")
+if python3 ~= "" then
+    vim.g.python3_host_prog = python3
+end

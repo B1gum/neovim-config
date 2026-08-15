@@ -1,0 +1,6 @@
+.DS_Store
+.nvim_data_test/
+.nvim_state_test/
+*~
+*.swp
+*.swo

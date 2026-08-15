@@ -1,0 +1,4 @@
+[submodule "lua/tungsten"]
+	path = lua/tungsten
+	url = https://github.com/B1gum/Tungsten.git
+	branch = main
